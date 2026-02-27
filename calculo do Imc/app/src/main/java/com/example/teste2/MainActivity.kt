@@ -2,6 +2,7 @@ package com.example.teste2
 
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,18 +20,24 @@ class MainActivity : AppCompatActivity() {
 //            insets
 //        }
 
-        val editTextAltura = findViewById<TextView>(R.id.textViewAltura)
-        val editTextPeso = findViewById<TextView>(R.id.textViewPeso)
+        val editTextAltura = findViewById<EditText>(R.id.editTextAltura)
+        val editTextPeso = findViewById<EditText>(R.id.editTextPeso)
         val resultado = findViewById<TextView>(R.id.textViewResultado)
-        val buttoncalcular = findViewById<TextView>(R.id.buttoncalcular);
+        val buttoncalcular = findViewById<TextView>(R.id.buttoncalcular)
 
         buttoncalcular.setOnClickListener {
-            val peso = editTextPeso.text.toString().toDouble();
-            val altura = editTextAltura.text.toString().toDouble();
+            val peso = editTextPeso.text.toString().toDoubleOrNull()
+            val altura = editTextAltura.text.toString().toDoubleOrNull()
+
+            if (altura == null || peso == null){
+                resultado.text = "Preencha os campos corretamente"
+                return@setOnClickListener
+            }
 
             val imc = peso / (altura * altura)
 
-            resultado.text = imc
+//            resultado.text = String.format("%.2f",imc)
+            resultado.text = "Seu IMC é: "+imc.toString()
         }
 
     }
